@@ -6,42 +6,66 @@ import {
   StatusBar,
   Platform,
   TouchableOpacity,
+  SafeAreaView,
 } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 
-function Home() {
+function Home({ navigation }) {
+  onNavigate = (page) => {
+      console.log(page);
+    navigation.navigate(page);
+  };
+
   return (
-    <View style={styles.container}>
-      <StatusBar backgroundColor="blue" barStyle='dark-content' />
+    <SafeAreaView style={styles.container}>
+      <StatusBar backgroundColor="blue" barStyle="dark-content" />
       <Text style={styles.title}>Sorting Algorithm Visualizer</Text>
       <View style={styles.divider} />
       <View style={styles.listContainer}>
         <View style={styles.row}>
-          <TouchableOpacity style={[styles.item, styles.bubbleBg]}>
+          <TouchableOpacity
+            onPress={() => onNavigate('Bubble')}
+            style={[styles.item, styles.bubbleBg]}
+          >
             <Text style={styles.algoType}>Bubble sort</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.item, styles.insertionBg]}>
+          <TouchableOpacity
+            onPress={() => onNavigate('Insertion')}
+            style={[styles.item, styles.insertionBg]}
+          >
             <Text style={styles.algoType}>Insertion sort</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.row}>
-          <TouchableOpacity style={[styles.item, styles.quickBg]}>
+          <TouchableOpacity
+            onPress={() => onNavigate('Quick')}
+            style={[styles.item, styles.quickBg]}
+          >
             <Text style={styles.algoType}>Quick sort</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.item, styles.heapBg]}>
+          <TouchableOpacity
+            onPress={() => onNavigate('Heap')}
+            style={[styles.item, styles.heapBg]}
+          >
             <Text style={styles.algoType}>Heap sort</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.row}>
-          <TouchableOpacity style={[styles.item, styles.selectionBg]}>
+          <TouchableOpacity
+            onPress={() => onNavigate('Selection')}
+            style={[styles.item, styles.selectionBg]}
+          >
             <Text style={styles.algoType}>Selection sort</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.item, styles.shellBg]}>
+          <TouchableOpacity
+            onPress={() => onNavigate('Shell')}
+            style={[styles.item, styles.shellBg]}
+          >
             <Text style={styles.algoType}>Shell sort</Text>
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -53,8 +77,6 @@ const StatusBarHeight =
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-
-    paddingTop: getStatusBarHeight() + 8,
   },
   title: {
     textAlign: 'center',
