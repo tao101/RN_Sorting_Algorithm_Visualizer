@@ -22,24 +22,28 @@ function Bubble() {
   };
 
   async function sortArray() {
-    console.log('sortArray');
     for (var i = 0; i < array.length - 1; i++) {
       for (var j = i + 1; j < array.length; j++) {
-        console.log(array[i] + ' > ' + array[j]);
         if (array[i] > array[j]) {
-          console.log('>');
-          var a = array[i];
-          array[i] = array[j];
-          array[j] = a;
+          var newArr = array.map((item, index) => {
+            if (index === j) {
+              return array[j];
+            }
+            if (index === i) {
+              return array[i];
+            }
+            return item;
+          });
+          //j--;
           await wait(100);
-          setArray(array);
+          setArray(newArr);
         } else {
           console.log('=');
           await wait(100);
         }
       }
     }
-    console.log(array)
+    console.log(array);
   }
 
   async function wait(n) {
