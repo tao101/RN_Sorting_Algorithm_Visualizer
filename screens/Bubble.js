@@ -5,6 +5,8 @@ import { Button, Text, SafeAreaView, StyleSheet } from 'react-native';
 import Chart from '../components/Chart';
 import generateArray from '../utils/generateArray';
 
+import useStateWithPromise from '../utils/useStateWithPromise';
+
 function Bubble() {
   const [array, setArray] = useState([]);
   const [size, setSize] = useState('small');
@@ -12,7 +14,7 @@ function Bubble() {
   useEffect(() => {
     if (array.length == 0) {
       const newArr = generateArray(size);
-      console.log(newArr);
+
       setArray(newArr);
     }
   }, []);
@@ -22,27 +24,26 @@ function Bubble() {
   };
 
   async function sortArray() {
-    for (var i = 0; i < array.length - 1; i++) {
-      for (var j = i + 1; j < array.length; j++) {
-        if (array[i] > array[j]) {
-          var newArr = array.map((item, index) => {
-            if (index === j) {
-              return array[j];
-            }
-            if (index === i) {
-              return array[i];
-            }
-            return item;
-          });
-          //j--;
+    var tmpArray = array.map((item) => {
+      return item;
+    });
+    console.log('sss');
+    for (var i = 0; i < tmpArray.length - 1; i++) {
+      for (var j = i + 1; j < tmpArray.length; j++) {
+        console.log('sdsd');
+        if (tmpArray[i] > tmpArray[j]) {
+          
+          var a = tmpArray[i];
+          tmpArray[i] = tmpArray[j];
+          tmpArray[j] = a;
+          setArray(tmpArray);
           await wait(100);
-          setArray(newArr);
         } else {
-          console.log('=');
           await wait(100);
         }
       }
     }
+    console.log('finished sorting array');
     console.log(array);
   }
 

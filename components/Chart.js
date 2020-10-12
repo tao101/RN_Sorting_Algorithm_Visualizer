@@ -10,8 +10,7 @@ function Chart(props) {
   
 
   const data = props.data;
-  console.log('got new Array');
-  console.log(data);
+  
   var dataset = [];
   data.map((item) => {
     dataset.push({
