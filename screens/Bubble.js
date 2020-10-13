@@ -7,6 +7,7 @@ import {
   StyleSheet,
   ScrollView,
   Button,
+  Platform
 } from 'react-native';
 import { BarChart, Grid } from 'react-native-svg-charts';
 
@@ -58,12 +59,9 @@ class Bubble extends React.Component {
           await sleep(speed);
         }
 
-        
         tmpArr[j].svg.fill = colorScale(tmpArr[j].value);
         tmpArr[j + 1].svg.fill = colorScale(tmpArr[j + 1].value);
-        
       }
-      
     }
   };
 
@@ -74,7 +72,7 @@ class Bubble extends React.Component {
       <SafeAreaView style={styles.container}>
         <Text style={styles.title}>BubbleSort</Text>
         <View style={styles.divider} />
-        <ScrollView>
+        <ScrollView style={styles.ScrollView}>
           <View>
             <BarChart
               style={styles.chart}
@@ -85,6 +83,38 @@ class Bubble extends React.Component {
             >
               <Grid />
             </BarChart>
+            <View style={styles.divider} />
+            <View>
+              <Text style={styles.description}>Description</Text>
+              <Text style={styles.descriptions}>
+                Bubble sort, sometimes referred to as sinking sort, is a simple
+                sorting algorithm that repeatedly steps through the list,
+                compares adjacent elements and swaps them if they are in the
+                wrong order. The pass through the list is repeated until the
+                list is sorted. The algorithm, which is a comparison sort, is
+                named for the way smaller or larger elements "bubble" to the top
+                of the list. This simple algorithm performs poorly in real world
+                use and is used primarily as an educational tool.
+              </Text>
+            </View>
+            <View style={styles.divider} />
+            <View>
+              <Text style={styles.description}>Complexity</Text>
+              <View>
+                <View style={styles.compItem}>
+                  <Text style={styles.compTitle}>Worst case</Text>
+                  <Text style={styles.compVal}>O(n^2)</Text>
+                </View>
+                <View style={styles.compItem}>
+                  <Text style={styles.compTitle}>Average case</Text>
+                  <Text style={styles.compVal}>O(n^2)</Text>
+                </View>
+                <View style={styles.compItem}>
+                  <Text style={styles.compTitle}>Best case</Text>
+                  <Text style={styles.compVal}>O(n)</Text>
+                </View>
+              </View>
+            </View>
           </View>
         </ScrollView>
         <View style={styles.divider} />
@@ -116,6 +146,9 @@ const styles = StyleSheet.create({
     margin: 5,
     marginTop: 10,
   },
+  ScrollView: {
+    margin: 5,
+  },
   title: {
     fontSize: 30,
     fontWeight: 'bold',
@@ -142,5 +175,26 @@ const styles = StyleSheet.create({
   },
   costum: {
     flex: 1,
+  },
+  description: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    padding: 8,
+  },
+  descriptions: {
+    paddingTop: 5,
+    paddingBottom: 10,
+  },
+  compItem: {
+    flexDirection: 'row',
+    paddingTop: 10,
+    paddingBottom: 10,
+  },
+  compTitle: {
+    flex: 1,
+  },
+  compVal: {
+    color: 'grey',
+    fontFamily: 'Al Nile',
   },
 });
