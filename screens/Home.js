@@ -10,6 +10,8 @@ import {
 } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 
+
+
 function Home({ navigation }) {
   onNavigate = (page) => {
       console.log(page);
