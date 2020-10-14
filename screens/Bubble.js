@@ -49,7 +49,7 @@ class Bubble extends React.Component {
       for (var j = 0; j < n - i - 1; j++) {
         console.log('sdsdsd');
         tmpArr[j].svg.fill = 'black';
-        tmpArr[j + 1].svg.fill = 'blue';
+        tmpArr[j + 1].svg.fill = 'black';
         //await sleep(50);
         if (tmpArr[j].value > tmpArr[j + 1].value) {
           var tmp = tmpArr[j];
@@ -61,6 +61,7 @@ class Bubble extends React.Component {
 
         tmpArr[j].svg.fill = colorScale(tmpArr[j].value);
         tmpArr[j + 1].svg.fill = colorScale(tmpArr[j + 1].value);
+        this.setState({ data: tmpArr });
       }
     }
   };
@@ -143,11 +144,11 @@ export default Bubble;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: 5,
-    marginTop: 10,
+    padding: 5,
+    paddingTop: 10,
   },
   ScrollView: {
-    margin: 5,
+    padding: 10,
   },
   title: {
     fontSize: 30,
@@ -157,7 +158,8 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: '#c0c0c0',
     marginBottom: 5,
-    marginTop: 5,
+    marginTop: 0,
+    paddingTop:0,
   },
   chart: {
     height: 300,
@@ -174,7 +176,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   costum: {
-    flex: 1,
+    flex: 1.1,
   },
   description: {
     fontSize: 20,
