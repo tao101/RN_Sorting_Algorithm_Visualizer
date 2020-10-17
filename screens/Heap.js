@@ -7,7 +7,7 @@ import {
   StyleSheet,
   ScrollView,
   Button,
-  Platform
+  Platform,
 } from 'react-native';
 import { BarChart, Grid } from 'react-native-svg-charts';
 
@@ -27,6 +27,7 @@ class Heap extends React.Component {
     var data = generateArray(arrSize);
     this.setState({ data });
   }
+  arrLength = 0;
 
   onShuffle = () => {
     const { arrSize } = this.state;
@@ -38,32 +39,71 @@ class Heap extends React.Component {
     //todo : add costum Input
   };
 
+  maxHeap = async (input, i) => {
+    const left = 2 * i + 1;
+    const right = 2 * i + 2;
+    let max = i;
+
+    if (left < this.arrLength && input[left].value > input[max].value) {
+      max = left;
+    }
+
+    if (right < this.arrLength && input[right].value > input[max].value) {
+      max = right;
+    }
+
+    if (max != i) {
+      await this.swap(input, i, max);
+      await this.maxHeap(input, max);
+    }
+  };
+
+  swap = async (input, indexA, indexB) => {
+    const { speed } = this.state;
+    input[indexA].svg.fill = 'black';
+    input[indexB].svg.fill = 'black';
+    this.setState({data:input})
+    await sleep(speed);
+
+    const temp = input[indexA];
+
+    input[indexA] = input[indexB];
+    input[indexB] = temp;
+    await sleep(speed);
+    input[indexA].svg.fill = colorScale(input[indexA].value);
+    input[indexB].svg.fill = colorScale(input[indexB].value);
+    this.setState({data:input})
+
+
+  };
+
+  heapSort = async (input) => {
+    this.arrLength = input.length;
+
+    for (let i = Math.floor(this.arrLength / 2); i >= 0; i -= 1) {
+      await this.maxHeap(input, i);
+    }
+
+    for (i = input.length - 1; i > 0; i--) {
+      await this.swap(input, 0, i);
+      this.arrLength--;
+
+      await this.maxHeap(input, 0);
+    }
+    return input;
+  };
+
   onSort = async () => {
     console.log('sdsd');
-    const { data, speed } = this.state;
-    var tmpArr = data.map((item) => {
+    let arrLength;
+
+    const list = this.state.data.map((item) => {
       return item;
     });
-    var n = tmpArr.length;
-    for (var i = 0; i < n - 1; i++) {
-      for (var j = 0; j < n - i - 1; j++) {
-        console.log('sdsdsd');
-        tmpArr[j].svg.fill = 'black';
-        tmpArr[j + 1].svg.fill = 'black';
-        //await sleep(50);
-        if (tmpArr[j].value > tmpArr[j + 1].value) {
-          var tmp = tmpArr[j];
-          tmpArr[j] = tmpArr[j + 1];
-          tmpArr[j + 1] = tmp;
-          this.setState({ data: tmpArr });
-          await sleep(speed);
-        }
 
-        tmpArr[j].svg.fill = colorScale(tmpArr[j].value);
-        tmpArr[j + 1].svg.fill = colorScale(tmpArr[j + 1].value);
-        this.setState({ data: tmpArr });
-      }
-    }
+    const sorted = await this.heapSort(list);
+    this.setState({ data: sorted });
+    console.log(list);
   };
 
   render() {
@@ -159,7 +199,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#c0c0c0',
     marginBottom: 5,
     marginTop: 0,
-    paddingTop:0,
+    paddingTop: 0,
   },
   chart: {
     height: 300,
