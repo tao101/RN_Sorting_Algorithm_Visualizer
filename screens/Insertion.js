@@ -50,7 +50,7 @@ class Insertion extends React.Component {
       let current = inputArr[i];
       inputArr[i].svg.fill = 'black';
       this.setState({data:inputArr})
-      await sleep(speed);
+      await sleep(speed/2);
       // The last element of our sorted subarray
       let j = i - 1;
       while (j > -1 && current.value < inputArr[j].value) {
@@ -58,12 +58,25 @@ class Insertion extends React.Component {
         inputArr[j + 1] = inputArr[j];
         inputArr[j + 1].svg.fill = 'black';
         this.setState({data:inputArr})
-        await sleep(speed);
+        await sleep(speed/2);
+        inputArr[j + 1].svg.fill = colorScale(inputArr[j + 1].value);
         j--;
+        this.setState({data:inputArr})
+        await sleep(speed/2);
+        
       }
       inputArr[j + 1] = current;
+      inputArr[i].svg.fill = colorScale(inputArr[i].value);
+      this.setState({data:inputArr})
+      await sleep(speed/2);
+      
     }
-    console.log(inputArr)
+    console.log(inputArr);
+    inputArr = inputArr.map((item)=>{
+      item.svg.fill = colorScale(item.value);
+      return item;
+
+    })
     this.setState({ data: inputArr });
   };
 
